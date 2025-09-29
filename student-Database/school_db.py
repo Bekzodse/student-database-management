@@ -1,9 +1,6 @@
 import sqlite3
 import csv
 
-# ===============================
-# Database Setup
-# ===============================
 conn = sqlite3.connect("school.db")
 cursor = conn.cursor()
 
@@ -45,9 +42,7 @@ CREATE TABLE IF NOT EXISTS grades (
 conn.commit()
 
 
-# ===============================
-# Student Functions
-# ===============================
+
 def add_student(name, group_name, age):
     cursor.execute("INSERT INTO students (name, group_name, age) VALUES (?, ?, ?)",
                    (name, group_name, age))
@@ -83,9 +78,6 @@ def search_student(name):
         print("No student found!")
 
 
-# ===============================
-# Teacher Functions
-# ===============================
 def add_teacher(name, subject):
     cursor.execute("INSERT INTO teachers (name, subject) VALUES (?, ?)", (name, subject))
     conn.commit()
@@ -99,9 +91,7 @@ def show_teachers():
         print(f"ID: {t[0]}, Name: {t[1]}, Subject: {t[2]}")
 
 
-# ===============================
-# Subject Functions
-# ===============================
+
 def add_subject(name):
     try:
         cursor.execute("INSERT INTO subjects (name) VALUES (?)", (name,))
@@ -118,9 +108,7 @@ def show_subjects():
         print(f"ID: {sub[0]}, Subject: {sub[1]}")
 
 
-# ===============================
-# Grade Functions
-# ===============================
+
 def add_grade(student_id, subject_id, grade):
     cursor.execute("INSERT INTO grades (student_id, subject_id, grade) VALUES (?, ?, ?)",
                    (student_id, subject_id, grade))
@@ -164,9 +152,7 @@ def average_grade(student_id):
         print("⚠️ No grades available.")
 
 
-# ===============================
-# Extra Feature: Export Students
-# ===============================
+
 def export_students_csv(filename="students.csv"):
     cursor.execute("SELECT * FROM students")
     students = cursor.fetchall()
@@ -177,9 +163,9 @@ def export_students_csv(filename="students.csv"):
     print(f"📂 Students exported to {filename}")
 
 
-# ===============================
+
 # Menu System
-# ===============================
+
 def menu():
     while True:
         print("\n===== School Management System =====")
@@ -267,8 +253,6 @@ def menu():
         else:
             print("❌ Invalid choice!")
 
-# ===============================
-# Run Program
-# ===============================
+
 menu()
 conn.close()
